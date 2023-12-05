@@ -32,7 +32,7 @@
                               <input type="password" class="form-control" name="password" placeholder="Contrasenya">
                             </div>
                             <button type="submit" name="login" class="btn btn-primary">Login</button>
-                            <button type="submit" name="registra" class="btn btn-primary">Reguistrate</button>
+                            <button type="submit" name="registra" class="btn btn-primary">Registrate</button>
                             <?php
                                 $bd = new database();
                                 $conexio = $bd->conectar();

@@ -21,6 +21,7 @@
         </header>
         <nav class="nav justify-content-center  ">
           <a class="nav-link active" href="login.php" aria-current="page">Login</a>
+          <a class="nav-link active" href="register.php" aria-current="page">Register</a>
           <a class="nav-link" href="#">Productes</a>
         </nav>
         <main>

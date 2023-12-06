@@ -32,7 +32,7 @@
                               <input type="password" class="form-control" name="password" placeholder="Contrasenya">
                             </div>
                             <button type="submit" name="login" class="btn btn-primary">Login</button>
-                            <button type="submit" name="registra" class="btn btn-primary">Reguistrate</button>
+                            <button type="submit" name="registra" class="btn btn-primary">Registrate</button>
                             <?php
                                 $bd = new database();
                                 $conexio = $bd->conectar();
@@ -42,7 +42,7 @@
                                     $sql = "SELECT * FROM Usuari WHERE nomUsuari = '$username' AND contrasenya = '$password'; ";
                                     $resultat = mysqli_query($conexio, $sql);
                                     if(mysqli_num_rows($resultat) == 1){
-                                        header("location:index.php");
+                                        header("location:mostrarTotsProductes.php");
                                     }else{
                                         echo "Usuari o contrasenya incorrectes";
                                     }

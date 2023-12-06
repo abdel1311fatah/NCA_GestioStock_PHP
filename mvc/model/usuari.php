@@ -102,17 +102,22 @@ class usuari extends ModelBase{
     }
 
     public function insertar(){
-        $query = "INSERT INTO usuari (nomUsuari, nom, cognom, dni, contrasenya) VALUES ('{$this->nomUsuari}', '{$this->nom}', '{$this->cognom}', '{$this->dni}', '{$this->contrasenya}')";
-        $insert = $this->db->query($query);
-
+        $query = "INSERT INTO usuari (nomUsuari, nom, cognoms, dni, contrasenya) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("sssss", $this->nomUsuari, $this->nom, $this->cognom, $this->dni, $this->contrasenya);
+        $insert = $stmt->execute();
+    
         return $insert;
     }
-
+    
     public function delete(){
-        $query = "DELETE FROM usuari WHERE nomUsuari = '{$this->nomUsuari}'";
-        $delete = $this->db->query($query);
-
+        $query = "DELETE FROM usuari WHERE nomUsuari = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $this->nomUsuari);
+        $delete = $stmt->execute();
+    
         return $delete;
     }
+    
 }
 ?>

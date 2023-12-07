@@ -20,8 +20,8 @@
                 <div class="loginRegistre">
                     <form action="register.php" method="post">
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nom:</label>
-                            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                            <label for="name" class="form-label">Nom:</label>
+                            <input type="text" class="form-control" name="name" placeholder="Nombre">
                         </div>
                         <div class="mb-3">
                             <label for="surname" class="form-label">Cognom:</label>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Nombre de usuario:</label>
-                            <input type="text" class="form-control" name="username" placeholder="Nom d' usuario">
+                            <input type="text" class="form-control" name="username" placeholder="Nom d' usuari">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Contrasenya:</label>
@@ -55,7 +55,7 @@
 
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $name = $_POST['nombre'];
+        $name = $_POST['name'];
         $surname = $_POST['surname'];
         $dni = $_POST['dni'];
 
@@ -69,7 +69,7 @@
             (nomUsuari, nom, cognoms, dni, contrasenya) VALUES ('$username', '$name', '$surname', '$dni', '$hashedPassword')";
 
             if (mysqli_query($conexio, $sql)) {
-                echo "Has insertat el usuari";
+                echo "Has pogut crear l' usuari";
             } else {
                 echo "No has pogut crear l' usuari: " . mysqli_error($conexio);
             }

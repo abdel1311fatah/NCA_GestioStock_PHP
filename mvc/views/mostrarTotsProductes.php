@@ -6,8 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Estilos adicionales -->
     <style>
         body {
             padding-top: 50px;
@@ -29,20 +27,25 @@
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Stock</th>
+                            <th>Marca</th>
+                            <th>Model</th>
+                            <th>Foto</th>
+                            <th>Arxivat</th>
+                            <th>Data</th>
+                            <th>Categoria</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($productes as $producte) { ?>
+                        <?php foreach ($productos as $producto) { ?>
                             <tr>
-                                <td><?php echo $producte['id']; ?></td>
-                                <td><?php echo $producte['nomProducte']; ?></td>
-                                <td><?php echo $producte['descripcio']; ?></td>
-                                <td><?php echo $producte['preu']; ?></td>
-                                <td><?php echo $producte['stock']; ?></td>
+                                <td><?php echo $producto['id']; ?></td>
+                                <td><?php echo $producto['marca']; ?></td>
+                                <td><?php echo $producto['model']; ?></td>
+                                <td><img src="<?php echo $producto['foto']; ?>" alt="Foto del Producto" width="100"></td>
+                                <td><?php echo $producto['arxivat']; ?></td>
+                                <td><?php echo $producto['data']; ?></td>
+                                <td><?php echo $producto['categoria']; ?></td>
+                               
                             </tr>
                         <?php } ?>
                     </tbody>

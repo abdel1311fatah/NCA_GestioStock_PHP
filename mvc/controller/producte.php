@@ -4,16 +4,9 @@ require_once "mvc/model/producte.php";
 class producteController {
 
     public function mostrartot() {  
-        $connexio = database::conectar();
-        $sql = "SELECT * FROM Productes";
-        $result = mysqli_query($connexio, $sql);
-
-        $productos = [];
-        if ($result && mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $productos[] = $row;
-            }
-        }
+        // Obtener los productos desde el modelo
+        $modelProducte = new Producte(); // Instancia del modelo Producte
+        $productos[] = $modelProducte->mostrar(); // Método mostrar() que obtiene los productos
 
         require_once "mvc/views/mostrarTotsProductes.php";
     }
@@ -23,7 +16,6 @@ class producteController {
     }
 
     public function crear() {
-       
         $producte = new Producte();
 
         $producte->setMarca($_POST["marca"]);
@@ -33,7 +25,8 @@ class producteController {
         $producte->setData($_POST["data"]);
         $producte->setCategoria($_POST["categoria"]);
         $producte->insertar();
-        header("Location:producte.php?controller=producte&action=mostrartot");
+        header("Location:index.php?controller=producte&action=mostrartot"); // Modifica la ruta de redirección si es necesario
     }
 }
+
 ?>

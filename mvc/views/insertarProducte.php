@@ -15,6 +15,21 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
+        #cuadroCamara {
+            position: relative;
+            width: 320px;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        #videoCamara {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 
@@ -23,7 +38,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mt-5 mb-4">Insertar Nuevo Producto</h2>
-                <form class="form-container" action="insertarProducte.php" method="POST" enctype="multipart/form-data">
+                <form class="form-container" action="index.php?controller=producte&action=crear" method="POST">
 
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
@@ -33,8 +48,7 @@
                         <label for="model" class="form-label">Modelo</label>
                         <input type="text" class="form-control" id="model" name="model" required>
                     </div>
-                    <!-- Campo de la foto -->
-                    <!-- <div class="mb-3">
+                    <div class="mb-3">
                         <label for="fotoOption" class="form-label">Opción de Foto</label>
                         <select class="form-select" id="fotoOption" name="fotoOption" required>
                             <option value="subir">Subir Imagen</option>
@@ -47,10 +61,13 @@
                     </div>
                     <div id="hacerFoto" class="mb-3" style="display: none;">
                         <label for="camara" class="form-label">Hacer Foto</label>
-                        <button type="button" class="btn btn-primary" id="verPrevisualizacion">Ver Previsualización</button>
-                        <div id="previsualizacion" style="display: none;"></div>
-                    </div> -->
-                    <!-- Fin del campo de la foto -->
+                        <button type="button" class="btn btn-primary" id="capturarFoto">Capturar Foto</button>
+                        <div id="cuadroCamara">
+                            <video id="videoCamara" width="320" height="240" autoplay></video>
+                            <canvas id="canvas" width="320" height="240"></canvas>
+                        </div>
+                    </div>
+                    <input type="hidden" id="imagenBase64" name="imagenBase64">
                     <div class="mb-3">
                         <label for="arxivat" class="form-label">Archivado</label>
                         <select class="form-select" id="arxivat" name="arxivat" required>
@@ -67,34 +84,14 @@
                         <input type="text" class="form-control" id="categoria" name="categoria" required>
                     </div>
                     <button type="submit" name="insertar" class="btn btn-primary">Insertar</button>
-
-                    <?php
-                        $producte = new Producte();
-                        if(isset($_POST['insertar'])){
-                            $producte->setMarca($_POST["marca"]);
-                            $producte->setModel($_POST["model"]);
-                            $producte->setFoto("hola");
-                            $producte->setArxivat($_POST["arxivat"]);
-                            $producte->setData($_POST["data"]);
-                            $producte->setCategoria($_POST["categoria"]);
-                            $resultat = $producte->insertar();
-                            if($resultat){
-                                echo "<div class='alert alert-success mt-3'>Producto insertado correctamente</div>";
-                                header("Location:producte.php?controller=producte&action=mostrartot");
-                            }else{
-                                echo "<div class='alert alert-danger mt-3'>Error: El producto no se ha podido insertar</div>";
-                            }
-                        }
-                    ?>
                 </form>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script>
-        
-        document.getElementById('fotoOption').addEventListener('change', function() {
+    <script>
+        document.getElementById('fotoOption').addEventListener('change', function () {
             var subirFoto = document.getElementById('subirFoto');
             var hacerFoto = document.getElementById('hacerFoto');
             if (this.value === 'subir') {
@@ -106,44 +103,33 @@
             }
         });
 
-        document.getElementById('verPrevisualizacion').addEventListener('click', function() {
-            var previsualizacion = document.getElementById('previsualizacion');
-            var video = document.createElement('video');
-            var canvas = document.createElement('canvas');
+        document.getElementById('capturarFoto').addEventListener('click', function () {
+            var canvas = document.getElementById('canvas');
             var context = canvas.getContext('2d');
-            var width = 320;
-            var height = 0;
+            var video = document.getElementById('videoCamara');
 
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                    video.play();
-                })
-                .catch(function(err) {
-                    console.log("An error occurred: " + err);
-                });
+            context.drawImage(video, 0, 0, 320, 240);
+            var data = canvas.toDataURL('image/png');
+            document.getElementById('imagenBase64').value = data;
 
-            video.addEventListener('canplay', function(ev) {
-                if (!streaming) {
-                    height = video.videoHeight / (video.videoWidth / width);
-                    video.setAttribute('width', width);
-                    video.setAttribute('height', height);
-                    canvas.setAttribute('width', width);
-                    canvas.setAttribute('height', height);
-                    streaming = true;
-                }
-            }, false);
-
-            video.addEventListener('click', function(ev) {
-                context.drawImage(video, 0, 0, width, height);
-                var data = canvas.toDataURL('image/png');
-                document.getElementById('imagenBase64').value = data;
-                previsualizacion.innerHTML = '<img src="' + data + '"/>';
-            }, false);
+            // Mostrar la foto capturada en el cuadro de la cámara
+            var fotoPrevia = document.createElement('img');
+            fotoPrevia.src = data;
+            fotoPrevia.style.width = '100%';
+            fotoPrevia.style.height = '100%';
+            document.getElementById('cuadroCamara').innerHTML = '';
+            document.getElementById('cuadroCamara').appendChild(fotoPrevia);
         });
-    </script> -->
+
+        // Obtener acceso a la cámara y mostrar la previsualización
+        var video = document.getElementById('videoCamara');
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+    </script>
 </body>
 
 </html>

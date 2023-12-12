@@ -11,16 +11,20 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($productos as $producto) { ?>
+        <?php 
+        $productes[] = $productos;
+        foreach ($productes as $producto) { ?>
             <tr>
+                <td><?php echo $producto['id']; ?></td>
                 <td><?php echo $producto['marca']; ?></td>
                 <td><?php echo $producto['model']; ?></td>
-                <td><img src="<?php echo $producto['foto']; ?>" alt="Foto del Producto" width="100"></td>
+                <!-- Construir la URL de la imagen -->
+                <td><img src="img/productes/<?php echo $producto['foto']; ?>" alt="Foto del Producto" width="100"></td>
+                <td><?php echo $producto['arxivat']; ?></td>
                 <td><?php echo $producto['data']; ?></td>
                 <td><?php echo $producto['categoria']; ?></td>
-                
             </tr>
         <?php } ?>
     </tbody>
 </table>
-<a href="index.php?controller=producte&action=insertar" class="btn btn-primary mb-4">Insertar Producto</a>
+<a href="http://localhost:8000/mvc/views/insertarProducte.php" class="btn btn-primary mb-4">Insertar Producto</a>

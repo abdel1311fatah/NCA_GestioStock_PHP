@@ -6,7 +6,7 @@ class producteController {
     public function mostrartot() {  
         // Obtener los productos desde el modelo
         $modelProducte = new Producte(); // Instancia del modelo Producte
-        $productos[] = $modelProducte->mostrar(); // Método mostrar() que obtiene los productos
+        $productos = $modelProducte->mostrar(); // Método mostrar() que obtiene los productos
 
         require_once "mvc/views/mostrarTotsProductes.php";
     }
@@ -25,7 +25,7 @@ class producteController {
         $producte->setData($_POST["data"]);
         $producte->setCategoria($_POST["categoria"]);
         $producte->insertar();
-        header("Location:index.php?controller=producte&action=mostrartot"); // Modifica la ruta de redirección si es necesario
+        header("Location:index.php?controller=producte&action=mostrartot"); 
     }
 }
 

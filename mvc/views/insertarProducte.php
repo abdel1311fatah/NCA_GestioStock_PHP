@@ -38,8 +38,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mt-5 mb-4">Insertar Nuevo Producto</h2>
-                <form class="form-container" action="index.php?controller=producte&action=crear" method="POST">
-
+                <form class="form-container" action="../../index.php?controller=producte&action=crear" method="post">
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
                         <input type="text" class="form-control" id="marca" name="marca" required>

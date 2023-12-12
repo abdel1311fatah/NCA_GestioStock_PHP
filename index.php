@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <title>PcComponents 2.0</title>

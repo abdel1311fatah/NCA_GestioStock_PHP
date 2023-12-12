@@ -42,41 +42,41 @@
                         <button type="submit" name="register" class="btn btn-primary">Registrarse</button>
                     </form>
                 </div>
+                <?php
+                    require_once "config/conexio.php";
+
+                    $bd = new database();
+                    $conexio = $bd->conectar();
+                    if (isset($_POST['register'])) {
+
+                        $username = $_POST['username'];
+                        $password = $_POST['password'];
+                        $name = $_POST['name'];
+                        $surname = $_POST['surname'];
+                        $dni = $_POST['dni'];
+
+                        if (empty($name) || empty($surname) || empty($username) || empty($password) || empty($dni)) {
+                            echo "Has de completar tots els camps";
+                        } else {
+
+                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                            $sql = "INSERT INTO Usuari 
+                            (nomUsuari, nom, cognoms, dni, contrasenya) VALUES ('$username', '$name', '$surname', '$dni', '$hashedPassword')";
+
+                            if (mysqli_query($conexio, $sql)) {
+                                header("Location:login.php");
+                            } else {
+                                echo "No has pogut crear l' usuari: " . mysqli_error($conexio);
+                            }
+
+                        }
+                    }
+                ?>
             </section>
         </article>
     </main>
-    <?php
-
-    require_once "config/conexio.php";
-
-    $bd = new database();
-    $conexio = $bd->conectar();
-    if (isset($_POST['register'])) {
-
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $name = $_POST['name'];
-        $surname = $_POST['surname'];
-        $dni = $_POST['dni'];
-
-        if (empty($name) || empty($surname) || empty($username) || empty($password) || empty($dni)) {
-            echo "Has de completar tots els camps";
-        } else {
-
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            $sql = "INSERT INTO Usuari 
-            (nomUsuari, nom, cognoms, dni, contrasenya) VALUES ('$username', '$name', '$surname', '$dni', '$hashedPassword')";
-
-            if (mysqli_query($conexio, $sql)) {
-                echo "Has pogut crear l' usuari";
-            } else {
-                echo "No has pogut crear l' usuari: " . mysqli_error($conexio);
-            }
-
-        }
-    }
-    ?>
+    
 </body>
 
 </html>

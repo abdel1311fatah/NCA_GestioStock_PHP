@@ -23,7 +23,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mt-5 mb-4">Insertar Nuevo Producto</h2>
-                <form class="form-container" action="index.php?controller=producte&action=crear" method="POST" enctype="multipart/form-data">
+                <form class="form-container" action="insertarProducte.php" method="POST" enctype="multipart/form-data">
+
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
                         <input type="text" class="form-control" id="marca" name="marca" required>
@@ -32,14 +33,22 @@
                         <label for="model" class="form-label">Modelo</label>
                         <input type="text" class="form-control" id="model" name="model" required>
                     </div>
-                    <!-- Agregar campo para la foto con captura de la cámara -->
+                    <!-- Campo de la foto -->
                     <div class="mb-3">
-                        <label for="foto" class="form-label">Foto</label>
-                        <video id="video" width="640" height="480" autoplay></video>
-                        <br>
-                        <button id="captureButton" class="btn btn-primary">Capturar Foto</button>
-                        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
-                        <input type="hidden" id="imagenBase64" name="imagenBase64"> <!-- Campo oculto para la imagen -->
+                        <label for="fotoOption" class="form-label">Opción de Foto</label>
+                        <select class="form-select" id="fotoOption" name="fotoOption" required>
+                            <option value="subir">Subir Imagen</option>
+                            <option value="hacer">Hacer Foto</option>
+                        </select>
+                    </div>
+                    <div id="subirFoto" class="mb-3">
+                        <label for="imagen" class="form-label">Subir Imagen</label>
+                        <input type="file" class="form-control" id="imagen" name="imagen">
+                    </div>
+                    <div id="hacerFoto" class="mb-3" style="display: none;">
+                        <label for="camara" class="form-label">Hacer Foto</label>
+                        <button type="button" class="btn btn-primary" id="verPrevisualizacion">Ver Previsualización</button>
+                        <div id="previsualizacion" style="display: none;"></div>
                     </div>
                     <!-- Fin del campo de la foto -->
                     <div class="mb-3">
@@ -57,7 +66,21 @@
                         <label for="categoria" class="form-label">Categoría</label>
                         <input type="text" class="form-control" id="categoria" name="categoria" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Insertar</button>
+                    <button type="submit" name="insertar" class="btn btn-primary">Insertar</button>
+
+                    <?php
+                        $producte = new Producte();
+                        if(isset($_POST['insertar'])){
+                            $producte->setMarca($_POST["marca"]);
+                            $producte->setModel($_POST["model"]);
+                            $producte->setFoto($_POST["imagenBase64"]);
+                            $producte->setArxivat($_POST["arxivat"]);
+                            $producte->setData($_POST["data"]);
+                            $producte->setCategoria($_POST["categoria"]);
+                            $producte->insertar();
+                            header("Location:producte.php?controller=producte&action=mostrartot");
+                        }
+                    ?>
                 </form>
             </div>
         </div>
@@ -65,41 +88,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        //script per a fer la foto des de la camara
-        document.addEventListener("DOMContentLoaded", function() {
-            var video = document.getElementById('video');
-            var canvas = document.getElementById('canvas');
-            var captureButton = document.getElementById('captureButton');
-            var imagenBase64Input = document.getElementById('imagenBase64');
+        
+        document.getElementById('fotoOption').addEventListener('change', function() {
+            var subirFoto = document.getElementById('subirFoto');
+            var hacerFoto = document.getElementById('hacerFoto');
+            if (this.value === 'subir') {
+                subirFoto.style.display = 'block';
+                hacerFoto.style.display = 'none';
+            } else if (this.value === 'hacer') {
+                subirFoto.style.display = 'none';
+                hacerFoto.style.display = 'block';
+            }
+        });
 
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function(error) {
-                    console.error('Error al activar la cámara:', error);
-                });
-
-            captureButton.addEventListener('click', function() {
-                var context = canvas.getContext('2d');
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                // Convierte la imagen a base64
-                var imagenBase64 = canvas.toDataURL('image/png');
-                imagenBase64Input.value = imagenBase64; // Asigna la imagen al campo oculto
-
-                // Envia la imagen al controlador mediante una solicitud fetch
-                fetch('index.php?controller=imagen&action=capturarImagen', {
-                        method: 'POST',
-                        body: 'data=' + encodeURIComponent(imagenBase64),
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(error => console.error('Error al enviar la imagen:', error));
-            });
+        document.getElementById('verPrevisualizacion').addEventListener('click', function() {
+            // Aquí puedes agregar el código para capturar la foto de la cámara y mostrar la previsualización
         });
     </script>
 </body>

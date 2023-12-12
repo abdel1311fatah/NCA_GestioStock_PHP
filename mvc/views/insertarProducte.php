@@ -34,7 +34,7 @@
                         <input type="text" class="form-control" id="model" name="model" required>
                     </div>
                     <!-- Campo de la foto -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="fotoOption" class="form-label">Opción de Foto</label>
                         <select class="form-select" id="fotoOption" name="fotoOption" required>
                             <option value="subir">Subir Imagen</option>
@@ -49,7 +49,7 @@
                         <label for="camara" class="form-label">Hacer Foto</label>
                         <button type="button" class="btn btn-primary" id="verPrevisualizacion">Ver Previsualización</button>
                         <div id="previsualizacion" style="display: none;"></div>
-                    </div>
+                    </div> -->
                     <!-- Fin del campo de la foto -->
                     <div class="mb-3">
                         <label for="arxivat" class="form-label">Archivado</label>
@@ -73,12 +73,17 @@
                         if(isset($_POST['insertar'])){
                             $producte->setMarca($_POST["marca"]);
                             $producte->setModel($_POST["model"]);
-                            $producte->setFoto($_POST["imagenBase64"]);
+                            $producte->setFoto("hola");
                             $producte->setArxivat($_POST["arxivat"]);
                             $producte->setData($_POST["data"]);
                             $producte->setCategoria($_POST["categoria"]);
-                            $producte->insertar();
-                            header("Location:producte.php?controller=producte&action=mostrartot");
+                            $resultat = $producte->insertar();
+                            if($resultat){
+                                echo "<div class='alert alert-success mt-3'>Producto insertado correctamente</div>";
+                                header("Location:producte.php?controller=producte&action=mostrartot");
+                            }else{
+                                echo "<div class='alert alert-danger mt-3'>Error: El producto no se ha podido insertar</div>";
+                            }
                         }
                     ?>
                 </form>
@@ -87,7 +92,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <!-- <script>
         
         document.getElementById('fotoOption').addEventListener('change', function() {
             var subirFoto = document.getElementById('subirFoto');
@@ -102,9 +107,43 @@
         });
 
         document.getElementById('verPrevisualizacion').addEventListener('click', function() {
-            // Aquí puedes agregar el código para capturar la foto de la cámara y mostrar la previsualización
+            var previsualizacion = document.getElementById('previsualizacion');
+            var video = document.createElement('video');
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            var width = 320;
+            var height = 0;
+
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    console.log("An error occurred: " + err);
+                });
+
+            video.addEventListener('canplay', function(ev) {
+                if (!streaming) {
+                    height = video.videoHeight / (video.videoWidth / width);
+                    video.setAttribute('width', width);
+                    video.setAttribute('height', height);
+                    canvas.setAttribute('width', width);
+                    canvas.setAttribute('height', height);
+                    streaming = true;
+                }
+            }, false);
+
+            video.addEventListener('click', function(ev) {
+                context.drawImage(video, 0, 0, width, height);
+                var data = canvas.toDataURL('image/png');
+                document.getElementById('imagenBase64').value = data;
+                previsualizacion.innerHTML = '<img src="' + data + '"/>';
+            }, false);
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

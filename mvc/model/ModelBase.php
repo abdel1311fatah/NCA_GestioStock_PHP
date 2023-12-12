@@ -10,7 +10,7 @@ class ModelBase{
     }
 
     public function mostrarTotTaula($tabla){
-        $query = $this->db->query("SELECT * FROM $tabla ORDER BY id ASC");
+        $query = $this->db->query("SELECT * FROM $tabla");
         return $query;
     }
     

@@ -4,9 +4,8 @@ require_once "mvc/model/producte.php";
 class producteController {
 
     public function mostrartot() {  
-        // Obtener los productos desde el modelo
-        $modelProducte = new Producte(); // Instancia del modelo Producte
-        $productos = $modelProducte->mostrar(); // Método mostrar() que obtiene los productos
+        $producte = new Producte(); 
+        $productos = $producte->mostrar(); 
 
         require_once "mvc/views/mostrarTotsProductes.php";
     }
@@ -16,8 +15,8 @@ class producteController {
     }
 
     public function crear() {
-        $producte = new Producte();
 
+        $producte = new Producte();
         $producte->setMarca($_POST["marca"]);
         $producte->setModel($_POST["model"]);
         $producte->setFoto($_POST["imagenBase64"]);
@@ -26,6 +25,7 @@ class producteController {
         $producte->setCategoria($_POST["categoria"]);
         $producte->insertar();
         header("Location:index.php?controller=producte&action=mostrartot"); 
+        
     }
 }
 

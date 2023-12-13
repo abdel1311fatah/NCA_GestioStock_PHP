@@ -26,7 +26,7 @@
           <a class="nav-link active" href="login.php" aria-current="page">Login</a>
           <a class="nav-link active" href="register.php" aria-current="page">Register</a>
           <a class="nav-link active" href="mvc/views/mostrarTotsProductes.php" aria-current="page">Mirar tots els productes</a>
-          <a class="nav-link active" href="mvc/views/insertarProducte.php" aria-current="page">Insertar productes</a>
+          <a class="nav-link active" href="index.php?controller=producte&action=insertar" aria-current="page">Insertar productes</a>
         </nav>
         <main>
             <article>
@@ -40,8 +40,7 @@
                 </section>
             </article>
         </main>
-        
-        <!-- Bootstrap JavaScript Libraries -->
+ 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
         </script>

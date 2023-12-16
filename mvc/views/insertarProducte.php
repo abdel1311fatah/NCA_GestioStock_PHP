@@ -38,8 +38,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mt-5 mb-4">Insertar Nuevo Producto</h2>
-                <form class="form-container" action="../../index.php?controller=producte&action=crear" method="post">
-                    <div class="mb-3">
+                <form class="form-container" action="../../index.php?controller=producte&action=crear" enctype="multipart/form-data" method="post"> 
+                <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
                         <input type="text" class="form-control" id="marca" name="marca" required>
                     </div>
@@ -108,7 +108,7 @@
             var video = document.getElementById('videoCamara');
 
             context.drawImage(video, 0, 0, 320, 240);
-            var data = canvas.toDataURL('image/png');
+            var data = canvas.toDataURL('img/productes');
             document.getElementById('imagenBase64').value = data;
 
             // Mostrar la foto capturada en el cuadro de la cámara

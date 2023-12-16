@@ -1,7 +1,8 @@
 <?php
 require_once "ModelBase.php";
 
-class Producte extends ModelBase {
+class Producte extends ModelBase
+{
     public $marca;
     public $model;
     public $foto;
@@ -9,9 +10,10 @@ class Producte extends ModelBase {
     public $data;
     public $categoria;
 
-    
 
-    public function mostrar(){
+
+    public function mostrar()
+    {
         $connexio = database::conectar();
         $sql = "SELECT * FROM Productes";
         $result = mysqli_query($connexio, $sql);
@@ -26,21 +28,31 @@ class Producte extends ModelBase {
         return $productos;
     }
 
-    public function insertar() {
-        $query = "INSERT INTO productes (marca, model, foto, arxivat, data, categoria) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("ssssss", $this->marca, $this->model, $this->foto, $this->arxivat, $this->data, $this->categoria);
-        $insert = $stmt->execute();
-    
-        return $insert;
+    public function insertar()
+    {
+        try {
+
+            $query = "INSERT INTO Productes (marca, model, foto, arxivat, data, categoria) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("ssssss", $this->marca, $this->model, $this->foto, $this->arxivat, $this->data, $this->categoria);
+            $insert = $stmt->execute();
+            return $insert;
+
+        } catch (Exception $e) {
+
+            echo $e->getMessage();
+            echo "<script> alert('The product could not be inserted in the database, try again later. I hate jews'); </script>";
+
+        }
     }
 
-    public function eliminar() {
+    public function eliminar()
+    {
         $query = "DELETE FROM productes WHERE model = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("s", $this->model);
         $delete = $stmt->execute();
-    
+
         return $delete;
     }
 
@@ -152,4 +164,3 @@ class Producte extends ModelBase {
         return $this;
     }
 }
-?>

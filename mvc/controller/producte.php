@@ -3,7 +3,8 @@ require_once "mvc/model/producte.php";
 
 class producteController {
 
-    public function mostrartot() {  
+    public function mostrartot() { 
+
         $producte = new Producte(); 
         $productos = $producte->mostrar(); 
 
@@ -15,17 +16,17 @@ class producteController {
     }
 
     public function crear() {
-
+        
         $producte = new Producte();
         $producte->setMarca($_POST["marca"]);
         $producte->setModel($_POST["model"]);
+        // guardar la foto a img/producte
         $producte->setFoto($_POST["imagenBase64"]);
         $producte->setArxivat($_POST["arxivat"]);
         $producte->setData($_POST["data"]);
         $producte->setCategoria($_POST["categoria"]);
         $producte->insertar();
-        header("Location:index.php?controller=producte&action=mostrartot"); 
-        
+
     }
 }
 

@@ -69,7 +69,6 @@
                             } else {
                                 echo "No has pogut crear l' usuari: " . mysqli_error($conexio);
                             }
-
                         }
                     }
                 ?>

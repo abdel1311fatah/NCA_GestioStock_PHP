@@ -38,8 +38,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mt-5 mb-4">Insertar Nuevo Producto</h2>
-                <form class="form-container" action="../../index.php?controller=producte&action=crear" enctype="multipart/form-data" method="post"> 
-                <div class="mb-3">
+                <form class="form-container" action="../../index.php?controller=producte&action=crear" enctype="multipart/form-data" method="post">
+                    <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
                         <input type="text" class="form-control" id="marca" name="marca" required>
                     </div>
@@ -90,7 +90,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('fotoOption').addEventListener('change', function () {
+        document.getElementById('fotoOption').addEventListener('change', function() {
             var subirFoto = document.getElementById('subirFoto');
             var hacerFoto = document.getElementById('hacerFoto');
             if (this.value === 'subir') {
@@ -102,14 +102,18 @@
             }
         });
 
-        document.getElementById('capturarFoto').addEventListener('click', function () {
+        document.getElementById('capturarFoto').addEventListener('click', function() {
             var canvas = document.getElementById('canvas');
             var context = canvas.getContext('2d');
             var video = document.getElementById('videoCamara');
 
             context.drawImage(video, 0, 0, 320, 240);
-            var data = canvas.toDataURL('img/productes');
-            document.getElementById('imagenBase64').value = data;
+            var data = canvas.toDataURL('image/png'); // Tipo de imagen, en este caso PNG
+            var timestamp = Date.now(); // Genera un timestamp único en milisegundos
+            var imageName = timestamp + '_imagen.png'; // Nombre de la imagen con el timestamp
+
+            // Asigna el nombre de la imagen al campo oculto
+            document.getElementById('imagenBase64').value = imageName;
 
             // Mostrar la foto capturada en el cuadro de la cámara
             var fotoPrevia = document.createElement('img');
@@ -120,10 +124,13 @@
             document.getElementById('cuadroCamara').appendChild(fotoPrevia);
         });
 
+
         // Obtener acceso a la cámara y mostrar la previsualización
         var video = document.getElementById('videoCamara');
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+            navigator.mediaDevices.getUserMedia({
+                video: true
+            }).then(function(stream) {
                 video.srcObject = stream;
                 video.play();
             });

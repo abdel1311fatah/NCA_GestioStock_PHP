@@ -9,7 +9,10 @@ class producteController
 
         $producte = new Producte();
         $productos = $producte->mostrar();
-
+        /* foreach ($productos as $producto) {
+            echo $producto;
+        } */
+    
         require_once "mvc/views/mostrarTotsProductes.php";
     }
 

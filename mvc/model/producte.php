@@ -15,7 +15,7 @@ class Producte extends ModelBase
     public function mostrar()
     {
         $connexio = database::conectar();
-        $sql = "SELECT * FROM Productes";
+        $sql = "SELECT * FROM productes";
         $result = mysqli_query($connexio, $sql);
 
         $productos = [];

@@ -33,26 +33,34 @@
         <a class="nav-link active" href="index.php?controller=producte&action=mostrarActualitzar" aria-current="page">Actualitzar producte</a>
 
     </nav>
+    <main>
+        <article>
+            <section>
+            <?php
 
-    <?php
+                require_once "autoload.php";
 
-    require_once "autoload.php";
+                if (isset($_GET["controller"]) && class_exists($_GET["controller"])) {
+                    $nomcontroller = $_GET["controller"] . "Controller";
+                    $controller = new $nomcontroller();
 
-    if (isset($_GET["controller"]) && class_exists($_GET["controller"])) {
-        $nomcontroller = $_GET["controller"] . "Controller";
-        $controller = new $nomcontroller();
+                    if (isset($_GET["action"]) && method_exists($controller, $_GET["action"])) {
+                        $action = $_GET["action"];
+                        $controller->$action();
+                    } else {
+                        echo $_GET["action"] . " no existeix aquest metode";
+                    }
+                } else {
+                    echo $_GET["controller"] . " no existeix el controlador";
+                }
 
-        if (isset($_GET["action"]) && method_exists($controller, $_GET["action"])) {
-            $action = $_GET["action"];
-            $controller->$action();
-        } else {
-            echo $_GET["action"] . " no existeix aquest metode";
-        }
-    } else {
-        echo $_GET["controller"] . " no existeix el controlador";
-    }
-
-    ?>
+            ?>
+            <a name="" class="btn btn-primary" href="https://nca.gnulinuxes.com/?controller=producte&action=mostrartot" role="button">Button</a>
+            
+            </section>
+        </article>
+    </main>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

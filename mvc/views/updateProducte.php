@@ -2,41 +2,75 @@
 <html lang="en">
 
 <head>
-    <title>Mostrar Productos</title>
-    <!-- Agrega tus estilos aquí -->
+    <title>Actualizar Producto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Agregar estilos adicionales si es necesario */
+    </style>
 </head>
 
 <body>
-    <table class="table table-striped table-bordered table-hover table-responsive table-container">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Marca</th>
-                <th>Model</th>
-                <th>Foto</th>
-                <th>Arxivat</th>
-                <th>Data</th>
-                <th>Categoria</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            foreach ($productos as $producto) { ?>
-                <tr>
-                    <td><?php echo $producto['id']; ?></td>
-                    <td><?php echo $producto['marca']; ?></td>
-                    <td><?php echo $producto['model']; ?></td>
-                    <!-- Mostrar la imagen utilizando la etiqueta <img> -->
-                    <td><img src="img/productes/<?php echo $producto['foto']; ?>" alt="Foto del Producto" width="100"></td>
-                    <td><?php echo $producto['arxivat']; ?></td>
-                    <td><?php echo $producto['data']; ?></td>
-                    <td><?php echo $producto['categoria']; ?></td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-    <a href="http://localhost:8000/mvc/views/insertarProducte.php" class="btn btn-primary mb-4">Insertar Producto</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="mt-5 mb-4">Actualizar Producto</h2>
+                <form class="form-container" action="../../index.php?controller=producte&action=actualitzar"
+                    enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="id" value="<?php echo $producto['id']; ?>">
+                    <div class="mb-3">
+                        <label for="marca" class="form-label">Marca</label>
+                        <input type="text" class="form-control" id="marca" name="marca"
+                            value="<?php echo $producto['marca']; ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="model" name="model"
+                            value="<?php echo $producto['model']; ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="arxivat" class="form-label">Archivado</label>
+                        <select class="form-select" id="arxivat" name="arxivat" required>
+                            <option value="1" <?php if ($producto['arxivat'] == 1)
+                                echo 'selected'; ?>>Sí</option>
+                            <option value="0" <?php if ($producto['arxivat'] == 0)
+                                echo 'selected'; ?>>No</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="data" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="data" name="data"
+                            value="<?php echo $producto['data']; ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoría</label>
+                        <input type="text" class="form-control" id="categoria" name="categoria"
+                            value="<?php echo $producto['categoria']; ?>" required>
+                    </div>
+                    <!-- Agregar otros campos aquí según el modelo Producte -->
+                    <button type="submit" name="actualizar" class="btn btn-primary">Actualizar</button>
+                </form>
 
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Agregar scripts adicionales si es necesario -->
 </body>
 
 </html>

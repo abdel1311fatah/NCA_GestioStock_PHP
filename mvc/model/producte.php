@@ -62,6 +62,22 @@ class Producte extends ModelBase
         return $productos;
     }
 
+    public function mostrarDesarchivats()
+    {
+        $connexio = database::conectar();
+        $sql = "SELECT * FROM productes where arxivat = 1";
+        $result = mysqli_query($connexio, $sql);
+
+        $productos = [];
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $productos[] = $row;
+            }
+        }
+
+        return $productos;
+    }
+
     public function find($id)
     {
         $connexio = database::conectar();
@@ -82,6 +98,15 @@ class Producte extends ModelBase
     public function archivar($id)
     {
         $query = "UPDATE Productes SET arxivat = 1 WHERE id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->affected_rows;
+    }
+
+    public function desarchivar($id)
+    {
+        $query = "UPDATE Productes SET arxivat = 0 WHERE id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $id);
         $stmt->execute();

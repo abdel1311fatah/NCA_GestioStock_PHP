@@ -28,18 +28,6 @@ class producteController
         require_once "mvc/views/archivarProductes.php";
     }
 
-    public function archivarProducto($id)
-    {
-        $producte = new Producte();
-        $archivado = $producte->archivar($id);
-
-        if ($archivado > 0) {
-            echo "El producto ha sido archivado correctamente.";
-        } else {
-            echo "Hubo un problema al archivar el producto.";
-        }
-    }
-
     public function insertar()
     {
         require_once "mvc/views/insertarProducte.php";
@@ -78,6 +66,23 @@ class producteController
             }
         } else {
             echo 'Error al subir la imagen. Código de error: ' . $_FILES['imagen']['error'];
+        }
+    }
+
+    public function archivarProducto()
+    {
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];
+            $producte = new Producte();
+            $archivado = $producte->archivar($id);
+
+            if ($archivado > 0) {
+                echo "El producto ha sido archivado correctamente.";
+            } else {
+                echo "Hubo un problema al archivar el producto.";
+            }
+        } else {
+            echo "No se proporcionó un ID válido para archivar.";
         }
     }
 

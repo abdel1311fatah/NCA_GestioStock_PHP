@@ -62,6 +62,23 @@ class Producte extends ModelBase
         return $productos;
     }
 
+    public function find($id)
+    {
+        $connexio = database::conectar();
+        $sql = "SELECT * FROM productes WHERE id = ?";
+        $stmt = $connexio->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $producto = null;
+        if ($result && $result->num_rows > 0) {
+            $producto = $result->fetch_assoc();
+        }
+
+        return $producto;
+    }
+
     public function archivar($id)
     {
         $query = "UPDATE Productes SET arxivat = 1 WHERE id = ?";
@@ -70,7 +87,7 @@ class Producte extends ModelBase
         $stmt->execute();
         return $stmt->affected_rows;
     }
-    
+
     /**
      * Get the value of marca
      */

@@ -8,7 +8,7 @@
 <body>
     <h1>Detalles del Producto</h1>
 
-    <table class="table table-striped table-bordered table-hover table-responsive table-container">
+    <table class="table table-striped table-bordered table-hover table-responsive table-container" id="taulaProductes">
         <thead class="table-dark">
             <tr>
                 <th>ID</th>

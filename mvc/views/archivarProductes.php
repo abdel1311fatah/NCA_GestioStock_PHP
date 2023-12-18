@@ -8,7 +8,7 @@
 
 <body>
     <!-- Formulario para filtrar por ID -->
-    <form action="ruta_del_controlador_para_filtrar_por_id" method="GET">
+    <form action="../../index.php?controller=producte&action=mostrarTotsArchivats" method="GET">
         <label for="id">Buscar por ID:</label>
         <input type="text" id="id" name="id">
         <button type="submit">Buscar</button>
@@ -29,7 +29,6 @@
         </thead>
         <tbody>
             <?php
-            // Aquí deberás implementar la lógica para mostrar los productos archivados
             foreach ($productos as $producto) { ?>
                 <tr>
                     <td><?php echo $producto['id']; ?></td>

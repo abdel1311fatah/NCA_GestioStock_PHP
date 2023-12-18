@@ -46,16 +46,31 @@ class Producte extends ModelBase
         }
     }
 
-    public function eliminar()
+    public function mostrarArchivats()
     {
-        $query = "DELETE FROM productes WHERE model = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("s", $this->model);
-        $delete = $stmt->execute();
+        $connexio = database::conectar();
+        $sql = "SELECT * FROM productes where arxivat = 0";
+        $result = mysqli_query($connexio, $sql);
 
-        return $delete;
+        $productos = [];
+        if ($result && mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $productos[] = $row;
+            }
+        }
+
+        return $productos;
     }
 
+    public function archivar($id)
+    {
+        $query = "UPDATE Productes SET arxivat = 1 WHERE id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->affected_rows;
+    }
+    
     /**
      * Get the value of marca
      */

@@ -3,12 +3,13 @@
 
 <head>
     <title>Detalles del Producto</title>
+    <!-- Agrega tus estilos aquí -->
 </head>
 
 <body>
     <h1>Detalles del Producto</h1>
 
-    <form action="index.php?controller=producte&action=buscarProducte" method="get">
+    <form action="index.php?controller=producte&action=buscarProducte" method="POST">
         <label for="product_id">Buscar por ID:</label>
         <input type="text" id="product_id" name="product_id">
         <button type="submit">Buscar</button>

@@ -51,29 +51,45 @@ class producteController
         $producte->setMarca($_POST["marca"]);
         $producte->setModel($_POST["model"]);
 
-        if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-            $file = $_FILES['imagen'];
+        if ($_POST["fotoOption"] === 'subir') {
+            // Subir imagen desde archivo
+            if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['imagen'];
 
-            $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-            if (in_array($_FILES['imagen']['type'], $allowedTypes)) {
-                $uploadPath = 'img/productes/' . basename($file['name']);
+                $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                if (in_array($_FILES['imagen']['type'], $allowedTypes)) {
+                    $uploadPath = 'img/productes/' . basename($file['name']);
 
-                if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-                    $producte->setFoto(basename($file['name']));
-                    $producte->setArxivat($_POST["arxivat"]);
-                    $producte->setData($_POST["data"]);
-                    $producte->setCategoria($_POST["categoria"]);
-                    $producte->insertar();
+                    if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
+                        $producte->setFoto(basename($file['name']));
+                        $producte->setArxivat($_POST["arxivat"]);
+                        $producte->setData($_POST["data"]);
+                        $producte->setCategoria($_POST["categoria"]);
+                        $producte->insertar();
+                    } else {
+                        echo 'Error al subir la imagen. Verifica los permisos y los logs del servidor.';
+                    }
                 } else {
-                    echo 'Error al subir la imagen. Verifica los permisos y los logs del servidor.';
+                    echo 'Tipo de archivo no válido. Sube una imagen JPEG, JPG, PNG o GIF.';
                 }
             } else {
-                echo 'Tipo de archivo no válido. Sube una imagen JPEG, JPG, PNG o GIF.';
+                echo 'Error al subir la imagen. Código de error: ' . $_FILES['imagen']['error'];
             }
-        } else {
-            echo 'Error al subir la imagen. Código de error: ' . $_FILES['imagen']['error'];
+        } elseif ($_POST["fotoOption"] === 'hacer') {
+            // Capturar imagen desde la cámara
+            $data = $_POST['imagenBase64'];
+            $timestamp = time();
+            $imageName = $timestamp . '_imagen.png';
+
+            // Asignar el nombre generado al producto
+            $producte->setFoto($imageName);
+            $producte->setArxivat($_POST["arxivat"]);
+            $producte->setData($_POST["data"]);
+            $producte->setCategoria($_POST["categoria"]);
+            $producte->insertar();
         }
     }
+
 
     public function archivarProducto()
     {
@@ -110,24 +126,25 @@ class producteController
     }
 
 
-    /* public function buscarProducteActualitzar()
+    public function buscarProducte()
     {
-        if (isset($_GET['product_id']) && !empty($_GET['product_id'])) {
-            $id = $_GET['product_id'];
+        if (isset($_POST['product_id']) && !empty($_POST['product_id'])) {
+            $product_id = $_POST['product_id'];
             $producte = new Producte();
-            $producto = $producte->find($id);
-    
+            $producto = $producte->find($product_id);
+
             if ($producto) {
-                $producteTrobat = array('producto' => $producto);
-                require_once "mvc/views/mostrarActualitzar.php"; // Vista para actualizar el producto
+                require_once "mvc/views/mostrarProducte.php"; 
             } else {
                 echo "No se encontró ningún producto con ese ID.";
             }
         } else {
             echo "No se proporcionó un ID válido.";
+            echo $_POST['product_id'];
         }
-    } */
-    
+    }
+
+
 
 
     public function mostrarActualitzar()
@@ -160,7 +177,7 @@ class producteController
                         if ($updated) {
                             echo "El producto ha sido actualizado correctamente.";
                         } else {
-                            /* echo $id;  per mirar que hagui agafat be el id*/ 
+                            /* echo $id;  per mirar que hagui agafat be el id*/
                             echo "Hubo un problema al actualizar el producto.";
                         }
                     } else {

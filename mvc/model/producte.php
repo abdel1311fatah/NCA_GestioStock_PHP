@@ -10,8 +10,6 @@ class Producte extends ModelBase
     public $data;
     public $categoria;
 
-
-
     public function mostrar()
     {
         $connexio = database::conectar();
@@ -86,8 +84,8 @@ class Producte extends ModelBase
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
-
         $producto = null;
+        
         if ($result && $result->num_rows > 0) {
             $producto = $result->fetch_assoc();
         }
@@ -111,6 +109,20 @@ class Producte extends ModelBase
         $stmt->bind_param("i", $id);
         $stmt->execute();
         return $stmt->affected_rows;
+    }
+
+    public function update($id)
+    {
+        try {
+            $query = "UPDATE Productes SET marca = ?, model = ?, foto = ?, arxivat = ?, data = ?, categoria = ? WHERE id = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("ssssssi", $this->marca, $this->model, $this->foto, $this->arxivat, $this->data, $this->categoria, $id);
+            $stmt->execute();
+            return $stmt->affected_rows > 0;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
     }
 
     /**

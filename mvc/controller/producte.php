@@ -51,21 +51,15 @@ class producteController
         $producte->setMarca($_POST["marca"]);
         $producte->setModel($_POST["model"]);
 
-        // Verificar si no hubo errores al subir la imagen
         if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
             $file = $_FILES['imagen'];
 
-            // Verificar si es un tipo de imagen permitido
             $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
             if (in_array($_FILES['imagen']['type'], $allowedTypes)) {
                 $uploadPath = 'img/productes/' . basename($file['name']);
 
-                // Mover la imagen cargada al directorio de destino
                 if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-                    // Establecer el nombre de la imagen en el objeto Producte
                     $producte->setFoto(basename($file['name']));
-
-                    // Resto de los set y la inserción en la base de datos
                     $producte->setArxivat($_POST["arxivat"]);
                     $producte->setData($_POST["data"]);
                     $producte->setCategoria($_POST["categoria"]);
@@ -116,21 +110,29 @@ class producteController
     }
 
 
-    public function findById($id)
+    /* public function buscarProducteActualitzar()
     {
-        $producte = new Producte();
-        $producto = $producte->find($id);
-
-        if ($producto) {
-            require_once "mvc/views/mostrarProducte.php";
+        if (isset($_GET['product_id']) && !empty($_GET['product_id'])) {
+            $id = $_GET['product_id'];
+            $producte = new Producte();
+            $producto = $producte->find($id);
+    
+            if ($producto) {
+                $producteTrobat = array('producto' => $producto);
+                require_once "mvc/views/mostrarActualitzar.php"; // Vista para actualizar el producto
+            } else {
+                echo "No se encontró ningún producto con ese ID.";
+            }
         } else {
-            echo "Producto no encontrado.";
+            echo "No se proporcionó un ID válido.";
         }
-    }
+    } */
+    
+
 
     public function mostrarActualitzar()
     {
-        require_once "mvc/views/updateProducte.php";
+        require_once "mvc/views/mostrarActualitzar.php";
     }
 
     public function actualitzar()
@@ -140,8 +142,6 @@ class producteController
             $producte = new Producte();
             $producte->setMarca($_POST["marca"]);
             $producte->setModel($_POST["model"]);
-
-            // Añadir aquí los otros campos del formulario
 
             if ($_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
                 $file = $_FILES['imagen'];
@@ -160,6 +160,7 @@ class producteController
                         if ($updated) {
                             echo "El producto ha sido actualizado correctamente.";
                         } else {
+                            /* echo $id;  per mirar que hagui agafat be el id*/ 
                             echo "Hubo un problema al actualizar el producto.";
                         }
                     } else {

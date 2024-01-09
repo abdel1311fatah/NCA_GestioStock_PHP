@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -33,7 +33,7 @@
     </style>
 </head>
 
-<body>
+<body> -->
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -136,6 +136,6 @@
             });
         }
     </script>
-</body>
+<!-- </body>
 
-</html>
+</html> -->

@@ -34,7 +34,7 @@
 </head>
 
 <body> -->
-    <div class="container">
+<div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="mt-5 mb-4">Insertar Nuevo Producto</h2>

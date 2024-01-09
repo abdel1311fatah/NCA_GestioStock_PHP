@@ -32,7 +32,7 @@ class Producte extends ModelBase
     {
         try {
 
-            $query = "INSERT INTO Productes (marca, model, foto, arxivat, data, categoria) VALUES (?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO productes (marca, model, foto, arxivat, data, categoria) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("ssssss", $this->marca, $this->model, $this->foto, $this->arxivat, $this->data, $this->categoria);
             $insert = $stmt->execute();

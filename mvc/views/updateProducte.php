@@ -1,3 +1,8 @@
+<?php
+    $producto = new Producte();
+    $producto = $producto->getProducteById($_GET['id']);
+?>
+
 <h2 class="mt-5 mb-4">Actualizar Producto</h2>
 <form class="form-container" action="../../index.php?controller=producte&action=mostrarActualitzar&id=<?php echo $producto['id']; ?>"
     enctype="multipart/form-data" method="post">

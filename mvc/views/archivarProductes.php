@@ -39,10 +39,7 @@
                     <td><?php echo $producto['data']; ?></td>
                     <td><?php echo $producto['categoria']; ?></td>
                     <td>
-                        <form action="../../index.php?controller=producte&action=archivarProducto" method="POST">
-                            <input type="hidden" name="id" value="<?php echo $producto['id']; ?>">
-                            <button type="submit" class="btn btn-danger">Archivar</button>
-                        </form>
+                        <a href="https://nca.gnulinuxes.com/index.php?controller=producte&action=archivarProducto&id=<?php echo $producto['id'];?>">Arxivar</a>
                     </td>
                 </tr>
             <?php } ?>

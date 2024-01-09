@@ -32,7 +32,6 @@
         <a class="nav-link active" href="index.php?controller=producte&action=insertar" aria-current="page">Insertar productes</a>
         <a class="nav-link active" href="index.php?controller=producte&action=mostrarTotsArchivats" aria-current="page">Archivar producte </a>
         <a class="nav-link active" href="index.php?controller=producte&action=mostrarTotsDesarchivats" aria-current="page">Desarchivar producte </a>
-        <a class="nav-link active" href="index.php?controller=producte&action=mostrarActualitzar" aria-current="page">Actualitzar producte</a>
 
     </nav>
     <main>

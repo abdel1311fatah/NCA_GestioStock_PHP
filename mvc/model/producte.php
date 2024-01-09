@@ -10,10 +10,12 @@ class Producte extends ModelBase
     public $data;
     public $categoria;
 
+
+
     public function mostrar()
     {
         $connexio = database::conectar();
-        $sql = "SELECT * FROM productes";
+        $sql = "SELECT * FROM productes ";
         $result = mysqli_query($connexio, $sql);
 
         $productos = [];
@@ -60,6 +62,26 @@ class Producte extends ModelBase
         return $productos;
     }
 
+    public function archivarProducto($id)
+    {
+        $connexio = database::conectar();
+        $sql = "UPDATE productes SET arxivat = 1 WHERE id = ?";
+        $stmt = $connexio->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $productos;
+        /*$id = $_GET['id'];
+        $connexio = database::conectar();
+        $sql = "UPDATE productes SET arxivat = 1 WHERE id = ?";
+        $stmt = $connexio->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        header("Location: index.php?controller=producte&action=mostrarTotsDesarchivats");
+        return $productos;*/
+    }
+
     public function mostrarDesarchivats()
     {
         $connexio = database::conectar();
@@ -73,6 +95,17 @@ class Producte extends ModelBase
             }
         }
 
+        return $productos;
+    }
+
+    public function desarchivarProducto()
+    {
+        $connexio = database::conectar();
+        $sql = "UPDATE productes SET arxivat = 0 WHERE id = ?";
+        $stmt = $connexio->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $productos;
     }
 

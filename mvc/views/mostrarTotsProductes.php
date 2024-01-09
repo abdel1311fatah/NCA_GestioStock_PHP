@@ -24,6 +24,7 @@
                 <th>Arxivat</th>
                 <th>Data</th>
                 <th>Categoria</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -36,12 +37,16 @@
                     <td><?php echo $producto['arxivat']; ?></td>
                     <td><?php echo $producto['data']; ?></td>
                     <td><?php echo $producto['categoria']; ?></td>
+<<<<<<< Updated upstream
                     <td>
                         <form action="../../index.php?controller=producte&action=mostrarActualitzar&id=<?php echo $producto['id']; ?>" method="POST">
                             <input type="hidden" name="id" value="<?php echo $producto['id']; ?>">
                             <button type="submit" class="btn btn-primary">Actualizar</button>
                         </form>
                     </td>
+=======
+                    <td><a name="" id="" class="btn btn-primary" href="https://nca.gnulinuxes.com/index.php?controller=producte&action=mostrarActualitzar&id=<?php echo $producto['id']?>"  role="button">Actualitzar</a></td>
+>>>>>>> Stashed changes
                 </tr>
             <?php } ?>
         </tbody>

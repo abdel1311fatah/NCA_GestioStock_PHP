@@ -93,7 +93,11 @@ class producteController
 
     public function archivarProducto()
     {
-        if (isset($_POST['id'])) {
+        $id = $_GET['id'];
+        $producte = new Producte();
+        $producte->archivar($id);
+        header("Location: index.php?controller=producte&action=mostrarTotsArchivats");
+        /*if (isset($_POST['id'])) {
             $id = $_POST['id'];
             $producte = new Producte();
             $archivado = $producte->archivar($id);
@@ -105,7 +109,7 @@ class producteController
             }
         } else {
             echo "No se proporcionó un ID válido para archivar.";
-        }
+        }*/
     }
 
     public function desarchivarProducto()

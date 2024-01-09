@@ -52,7 +52,5 @@
     <form action="../../index.php?controller=producte&action=insertar" method="GET">
         <button type="submit" class="btn btn-primary mb-4">Insertar Producto</button>
     </form>
+    </body>
 
-</body>
-
-</

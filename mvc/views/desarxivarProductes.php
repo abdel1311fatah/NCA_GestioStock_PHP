@@ -39,7 +39,7 @@
                     <td><?php echo $producto['data']; ?></td>
                     <td><?php echo $producto['categoria']; ?></td>
                     <td>
-                        <form action="../../index.php?controller=producte&action=desarchivarProducto" method="POST">
+                        <form action="../../index.php?controller=producte&action=desarchivarProducto&id=<?php echo $producto['id']; ?>" method="POST">
                             <input type="hidden" name="id" value="<?php echo $producto['id']; ?>">
                             <button type="submit" class="btn btn-danger">Desarchivar</button>
                         </form>

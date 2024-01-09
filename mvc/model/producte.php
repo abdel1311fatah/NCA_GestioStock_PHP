@@ -128,7 +128,7 @@ class Producte extends ModelBase
 
     public function archivar($id)
     {
-        $query = "UPDATE Productes SET arxivat = 1 WHERE id = ?";
+        $query = "UPDATE productes SET arxivat = 1 WHERE id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -137,7 +137,7 @@ class Producte extends ModelBase
 
     public function desarchivar($id)
     {
-        $query = "UPDATE Productes SET arxivat = 0 WHERE id = ?";
+        $query = "UPDATE productes SET arxivat = 0 WHERE id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -147,7 +147,7 @@ class Producte extends ModelBase
     public function update($id)
     {
         try {
-            $query = "UPDATE Productes SET marca = ?, model = ?, foto = ?, arxivat = ?, data = ?, categoria = ? WHERE id = ?";
+            $query = "UPDATE productes SET marca = ?, model = ?, foto = ?, arxivat = ?, data = ?, categoria = ? WHERE id = ?";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("ssssssi", $this->marca, $this->model, $this->foto, $this->arxivat, $this->data, $this->categoria, $id);
             $stmt->execute();

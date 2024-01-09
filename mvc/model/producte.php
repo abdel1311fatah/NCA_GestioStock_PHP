@@ -98,6 +98,19 @@ class Producte extends ModelBase
         return $productos;
     }
 
+    public function buscarProducte($id)
+    {
+        $connexio = database::conectar();
+        $sql = "SELECT * FROM productes where id = $id";
+        $stmt = $connexio->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+
+        return $productos;
+    }
+
     public function desarchivarProducto()
     {
         $connexio = database::conectar();

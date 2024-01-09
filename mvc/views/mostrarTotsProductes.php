@@ -6,13 +6,20 @@
 </head>
 
 <body>
-    <form action="../../index.php?controller=producte&action=buscarProducte" method="POST">
+    <form action="../../index.php?controller=producte&action=mostrartot" method="POST">
         <label for="product_id">Buscar por ID:</label>
         <input type="text" id="product_id" name="product_id">
         <button type="submit">Buscar</button>
     </form>
 
-    <?php echo $_POST['product_id']; ?>
+    <?php
+    if (isset($_POST['POST'])){
+        if (isset($_POST['product_id'])){
+            $product_id = $_POST['product_id'];
+            header("Location: index.php?controller=producte&action=buscarProducte&id=" . $product_id);
+        }
+    } 
+    ?>
 
     <table class="table table-striped table-bordered table-hover table-responsive table-container">
         <thead class="table-dark">

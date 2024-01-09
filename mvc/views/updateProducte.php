@@ -1,6 +1,5 @@
 <?php
-    $producto = new Producte();
-    $producto = $producto->getProducteById($_GET['id']);
+
 ?>
 
 <h2 class="mt-5 mb-4">Actualizar Producto</h2>
